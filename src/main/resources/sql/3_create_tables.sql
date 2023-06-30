@@ -39,10 +39,10 @@ CREATE TABLE aliens
     full_size_logo   VARCHAR(100),
     first_appearance INTEGER NOT NULL ,
     likes_count      INTEGER DEFAULT 0,
-    source_id        INTEGER       NOT NULL,
+    planet_id        INTEGER       NOT NULL,
     ability_id        INTEGER       NOT NULL,
-    CONSTRAINT fk_alien_source FOREIGN KEY (source_id)
-        REFERENCES sources (id)
+    CONSTRAINT fk_alien_planet FOREIGN KEY (planet_id)
+        REFERENCES planets (id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     CONSTRAINT fk_alien_ability FOREIGN KEY (ability_id)
