@@ -82,16 +82,20 @@ VALUES (1, 1),
        (2, 1),
        (2, 2);
 
-INSERT INTO alien_abilities(alien_id, ability_id)
+INSERT INTO alien_sources(alien_id, source_id)
 VALUES (1, 1),
+       (1, 2),
        (2, 1),
+       (2, 2),
        (3, 1),
+       (3, 2),
        (3, 4),
-       (3, 7),
-       (4, 5),
+       (3, 5),
+       (4, 2),
+       (4, 3),
        (5, 1),
        (5, 2),
-       (6, 1),
-       (6, 2),
-       (7, 1),
-       (7, 6);
+       (5, 4),
+       (5, 5),
+       (6, 4),
+       (7, 5);
