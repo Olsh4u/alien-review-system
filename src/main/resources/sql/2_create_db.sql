@@ -1,0 +1,6 @@
+CREATE DATABASE alien_db;
+
+CREATE USER application WITH PASSWORD 'admin';
+
+GRANT SELECT, INSERT, UPDATE, DELETE
+    ON ALL TABLES IN SCHEMA public TO application;
