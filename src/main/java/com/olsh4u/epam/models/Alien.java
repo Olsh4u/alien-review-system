@@ -4,10 +4,10 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * The Alien class represents an alien entity, extends {@link BaseEntity} class.
+ * The Alien class represents an alien entity, extends {@link AbstractEntity} class.
  * It contains properties and methods related to alien information, abilities, and associated data.
  */
-public class Alien extends BaseEntity {
+public class Alien extends AbstractEntity {
 
     private static final long serialVersionUID = -8730462953097921508L;
 

@@ -102,7 +102,7 @@ CREATE TABLE liked
         ON UPDATE CASCADE
 );
 
-CREATE TABLE alien_sources
+CREATE TABLE aliens_sources
 (
     alien_id  INTEGER NOT NULL,
     source_id INTEGER NOT NULL,

@@ -3,10 +3,10 @@ package com.olsh4u.epam.models;
 import java.util.Objects;
 
 /**
- * The Ability class represents an ability entity, extends {@link BaseEntity} class.
+ * The Ability class represents an ability entity, extends {@link AbstractEntity} class.
  * It contains properties and methods related to ability information.
  */
-public class Ability extends BaseEntity {
+public class Ability extends AbstractEntity {
     private static final long serialVersionUID = -5599644480354135522L;
     private String title;
 

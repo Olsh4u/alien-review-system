@@ -3,10 +3,10 @@ package com.olsh4u.epam.models;
 import java.util.Objects;
 
 /**
- * The User class represents a user entity, extends {@link BaseEntity} class.
+ * The User class represents a user entity, extends {@link AbstractEntity} class.
  * It contains properties and methods related to user information and access rights.
  */
-public class User extends BaseEntity {
+public class User extends AbstractEntity {
 
     private static final long serialVersionUID = -3150289886212330216L;
 

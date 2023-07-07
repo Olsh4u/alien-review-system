@@ -8,7 +8,7 @@ import java.util.Objects;
  * The BaseEntity class is a base class that implements {@link Serializable} interface.
  * This class represents a basic entity with an identifier.
  */
-public class BaseEntity implements Serializable {
+public class AbstractEntity implements Serializable {
 
     private final static long serialVersionUID = -7967871648368085337L;
 
@@ -20,7 +20,7 @@ public class BaseEntity implements Serializable {
     /**
      * Default constructor for the BaseEntity class.
      */
-    public BaseEntity() {
+    public AbstractEntity() {
     }
 
     /**
@@ -28,7 +28,7 @@ public class BaseEntity implements Serializable {
      *
      * @param id the entity's id.
      */
-    public BaseEntity(int id) {
+    public AbstractEntity(int id) {
         this.id = id;
     }
 
@@ -60,7 +60,7 @@ public class BaseEntity implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BaseEntity that = (BaseEntity) o;
+        AbstractEntity that = (AbstractEntity) o;
         return id == that.id;
     }
 

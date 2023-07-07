@@ -1,7 +1,7 @@
 package com.olsh4u.epam.models;
 
 /**
- * The enum AccessRight represent the text designation for a {@link User} access rights.
+ * Enumeration of AccessRights which represent the text designation for a {@link User} access rights.
  */
 public enum AccessRightEnum {
     /**

@@ -3,10 +3,10 @@ package com.olsh4u.epam.models;
 import java.util.Objects;
 
 /**
- * The Source class represents a source entity, extends {@link BaseEntity} class.
+ * The Source class represents a source entity, extends {@link AbstractEntity} class.
  * It contains properties and methods related to source information.
  */
-public class Source extends BaseEntity {
+public class Source extends AbstractEntity {
     private static final long serialVersionUID = -5599644480354135522L;
     private String title;
 

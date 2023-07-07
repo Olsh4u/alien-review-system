@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
- * The Comment class represents an comment entity, extends {@link BaseEntity} class.
+ * The Comment class represents an comment entity, extends {@link AbstractEntity} class.
  * It contains properties and methods related to comment information, publication date and associated data.
  */
-public class Comment extends BaseEntity {
+public class Comment extends AbstractEntity {
     private static final long serialVersionUID = -4451328805432622998L;
     private User user;
     private Alien alien;

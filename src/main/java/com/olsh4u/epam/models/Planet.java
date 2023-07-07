@@ -3,10 +3,10 @@ package com.olsh4u.epam.models;
 import java.util.Objects;
 
 /**
- * The Planet class represents a planet entity, extends {@link BaseEntity} class.
+ * The Planet class represents a planet entity, extends {@link AbstractEntity} class.
  * It contains properties and methods related to planet information.
  */
-public class Planet extends BaseEntity {
+public class Planet extends AbstractEntity {
     private static final long serialVersionUID = -5599644480354135522L;
     private String title;
 
