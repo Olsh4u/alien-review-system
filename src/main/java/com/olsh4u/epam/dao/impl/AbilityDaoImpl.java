@@ -20,6 +20,19 @@ import java.util.List;
  * @see DaoException
  */
 public class AbilityDaoImpl implements AbilityDao {
+    private static final String UPDATE_ABILITY = "UPDATE abilities SET title = ? WHERE id = ?";
+    private static final String CREATE_ABILITY = "INSERT INTO abilities VALUES (DEFAULT, ?)";
+    private static final String DELETE_ABILITY_BY_ID = "DELETE FROM abilities WHERE id = ?";
+    private static final String FIND_ABILITY_BY_ID = "SELECT id, title FROM abilities WHERE id = ?";
+    private static final String COUNT_ALL_ABILITY = "SELECT COUNT(*) FROM abilities";
+    private static final String FIND_ABILITY_PAGE_BY_PAGE = "SELECT id, title FROM abilities ORDER BY title LIMIT ? OFFSET ?";
+    private static final String FIND_ALL_ABILITY = "SELECT id, title FROM abilities";
+    private static final String FIND_ABILITY_BY_TITLE = "SELECT id, title FROM abilities WHERE title = ?";
+
+    /**
+     * An object that provides access to a data source.
+     */
+    private final Transaction transaction;
 
     /**
      * Implementation of {@link ResultSetHandler} functional interface. Needs for build {@link Ability} from result set.
@@ -40,16 +53,9 @@ public class AbilityDaoImpl implements AbilityDao {
         }
     };
 
-    /**
-     * An object that provides access to a data source.
-     */
-    private final Transaction transaction;
-
     public AbilityDaoImpl(final Transaction transaction) {
         this.transaction = transaction;
     }
-
-    private static final String FIND_ABILITY_BY_TITLE = "SELECT id, title FROM abilities WHERE title = ?";
 
     /**
      * Find ability by title.
@@ -64,8 +70,6 @@ public class AbilityDaoImpl implements AbilityDao {
                 ResultSetHandlerFactory.getSingleResultSetHandler(ABILITY_RESULT_SET_HANDLER), abilityTitle);
     }
 
-    private static final String FIND_ALL_ABILITY = "SELECT id, title FROM abilities";
-
     /**
      * Find all abilities.
      *
@@ -77,8 +81,6 @@ public class AbilityDaoImpl implements AbilityDao {
         return JdbcUtil.select(transaction.getConnection(), FIND_ALL_ABILITY,
                 ResultSetHandlerFactory.getListResultSetHandler(ABILITY_RESULT_SET_HANDLER));
     }
-
-    private static final String FIND_ABILITY_PAGE_BY_PAGE = "SELECT id, title FROM abilities ORDER BY title LIMIT ? OFFSET ?";
 
     /**
      * Find abilities page by page.
@@ -95,8 +97,6 @@ public class AbilityDaoImpl implements AbilityDao {
                 ResultSetHandlerFactory.getListResultSetHandler(ABILITY_RESULT_SET_HANDLER), limit, offset);
     }
 
-    private static final String COUNT_ALL_ABILITY = "SELECT COUNT(*) FROM abilities";
-
     /**
      * Count all abilities.
      *
@@ -108,8 +108,6 @@ public class AbilityDaoImpl implements AbilityDao {
         return JdbcUtil.select(transaction.getConnection(), COUNT_ALL_ABILITY,
                 ResultSetHandlerFactory.getCountResultSetHandler());
     }
-
-    private static final String FIND_ABILITY_BY_ID = "SELECT id, title FROM abilities WHERE id = ?";
 
     /**
      * Find ability by id.
@@ -124,8 +122,6 @@ public class AbilityDaoImpl implements AbilityDao {
                 ResultSetHandlerFactory.getSingleResultSetHandler(ABILITY_RESULT_SET_HANDLER), id);
     }
 
-    private static final String DELETE_ABILITY_BY_ID = "DELETE FROM abilities WHERE id = ?";
-
     /**
      * Delete abilities by id.
      *
@@ -138,8 +134,6 @@ public class AbilityDaoImpl implements AbilityDao {
         return JdbcUtil.execute(transaction.getConnection(), DELETE_ABILITY_BY_ID, id);
     }
 
-    private static final String CREATE_ABILITY = "INSERT INTO abilities VALUES (DEFAULT, ?)";
-
     /**
      * Create ability.
      *
@@ -151,8 +145,6 @@ public class AbilityDaoImpl implements AbilityDao {
     public boolean create(final Ability entity) throws DaoException {
         return JdbcUtil.execute(transaction.getConnection(), CREATE_ABILITY, entity.getTitle());
     }
-
-    private static final String UPDATE_ABILITY = "UPDATE abilities SET title = ? WHERE id = ?";
 
     /**
      * Update ability.

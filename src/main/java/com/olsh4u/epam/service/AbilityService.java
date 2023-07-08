@@ -32,7 +32,7 @@ public interface AbilityService {
      * @return the list of abilities
      * @throws ServiceException if the method failed
      */
-    List<Ability> findAbilityPageByPage(int page, int limit) throws ServiceException;
+    List<Ability> findAbilitiesPageByPage(int page, int limit) throws ServiceException;
 
     /**
      * Count all abilities.

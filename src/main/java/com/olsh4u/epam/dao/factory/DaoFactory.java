@@ -1,6 +1,7 @@
 package com.olsh4u.epam.dao.factory;
 
-import com.olsh4u.epam.dao.Transaction;
+import com.olsh4u.epam.dao.*;
+import com.olsh4u.epam.dao.impl.*;
 
 /**
  * Class for accessing a specific DAO. Represents an implementation of the Singleton design pattern.
@@ -35,43 +36,43 @@ public final class DaoFactory {
     }
 
     /**
-     * Gets serial dao.
+     * Gets alien dao.
      *
      * @param transaction the transaction
-     * @return the serial dao
+     * @return the alien dao
      */
-    public SerialDao getSerialDao(final Transaction transaction) {
-        return new SerialDaoImpl(transaction);
+    public AlienDao getAlienDao(final Transaction transaction) {
+        return new AlienDaoImpl(transaction);
     }
 
     /**
-     * Gets genre dao.
+     * Gets source dao.
      *
      * @param transaction the transaction
-     * @return the genre dao
+     * @return the source dao
      */
-    public GenreDao getGenreDao(final Transaction transaction) {
-        return new GenreDaoImpl(transaction);
+    public SourceDao getSourceDao(final Transaction transaction) {
+        return new SourceDaoImpl(transaction);
     }
 
     /**
-     * Gets country dao.
+     * Gets ability dao.
      *
      * @param transaction the transaction
-     * @return the country dao
+     * @return the ability dao
      */
-    public CountryDaoImpl getCountryDao(final Transaction transaction) {
-        return new CountryDaoImpl(transaction);
+    public AbilityDaoImpl getAbilityDao(final Transaction transaction) {
+        return new AbilityDaoImpl(transaction);
     }
 
     /**
-     * Gets studio dao.
+     * Gets planet dao.
      *
      * @param transaction the transaction
-     * @return the studio dao
+     * @return the planet dao
      */
-    public StudioDaoImpl getStudioDao(final Transaction transaction) {
-        return new StudioDaoImpl(transaction);
+    public PlanetDaoImpl getPlanetDao(final Transaction transaction) {
+        return new PlanetDaoImpl(transaction);
     }
 
     /**

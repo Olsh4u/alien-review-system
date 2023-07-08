@@ -35,7 +35,7 @@ public interface PlanetService {
      * @return the list of planets
      * @throws ServiceException if the method failed
      */
-    List<Planet> findPlanetPageByPage(int page, int limit) throws ServiceException;
+    List<Planet> findPlanetsPageByPage(int page, int limit) throws ServiceException;
 
     /**
      * Count of all planets.

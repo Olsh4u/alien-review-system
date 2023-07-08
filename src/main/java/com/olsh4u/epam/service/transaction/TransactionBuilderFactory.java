@@ -1,5 +1,6 @@
 package com.olsh4u.epam.service.transaction;
 
+import com.olsh4u.epam.dao.Transaction;
 import com.olsh4u.epam.exception.ServiceException;
 import com.olsh4u.epam.models.AbstractEntity;
 

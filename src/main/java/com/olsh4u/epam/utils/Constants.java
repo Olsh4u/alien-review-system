@@ -22,6 +22,7 @@ public class Constants {
     public static final String ROUTING_ERROR_JSP = "error.jsp";
     public static final String ERROR_LOGGER = "error";
     public static final String DEBUG_LOGGER = "debug";
+    public static final String ROUTING_SHOW_PAGE = "/final/show.html";
 
 
 

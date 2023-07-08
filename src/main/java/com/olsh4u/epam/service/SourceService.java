@@ -24,7 +24,7 @@ public interface SourceService {
      * @return the list of source
      * @throws ServiceException if the method failed
      */
-    List<Source> findSourcePageByPage(int page, int limit) throws ServiceException;
+    List<Source> findSourcesPageByPage(int page, int limit) throws ServiceException;
 
     /**
      * Count all sources.

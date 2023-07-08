@@ -21,4 +21,5 @@ public interface SecurityService {
      * @return the hashed password
      */
     String hashPw(String password, String salt);
+
 }

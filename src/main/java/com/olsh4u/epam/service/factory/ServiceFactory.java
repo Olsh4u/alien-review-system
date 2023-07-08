@@ -1,7 +1,7 @@
 package com.olsh4u.epam.service.factory;
 
 import com.olsh4u.epam.service.*;
-import com.olsh4u.epam.service.impl.CommentServiceImpl;
+import com.olsh4u.epam.service.impl.*;
 
 /**
  * Class for accessing a specific Service.
@@ -11,10 +11,10 @@ public final class ServiceFactory {
     private static final ServiceFactory INSTANCE = new ServiceFactory();
     private final CommentService commentService = new CommentServiceImpl();
     private final UserService userService = new UserServiceImpl();
-    private final AbilityService abilityService = new CountryServiceImpl();
-    private final PlanetService planetService = new StudioServiceImpl();
-    private final AlienService alienService = new SerialServiceImpl();
-    private final SourceService sourceService = new GenreServiceImpl();
+    private final AbilityService abilityService = new AbilityServiceImpl();
+    private final PlanetService planetService = new PlanetServiceImpl();
+    private final AlienService alienService = new AlienServiceImpl();
+    private final SourceService sourceService = new SourceServiceImpl();
     private final SecurityService securityService = new SecurityServiceImpl();
 
 

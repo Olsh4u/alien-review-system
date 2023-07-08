@@ -15,7 +15,7 @@ public interface AlienService {
     /**
      * Find alien by id.
      *
-     * @param id the serial id
+     * @param id the alien id
      * @return the alien
      * @throws ServiceException if the method failed
      */
@@ -25,7 +25,7 @@ public interface AlienService {
      * Find alien by name.
      *
      * @param name the alien name
-     * @return the serial
+     * @return the alien
      * @throws ServiceException if the method failed
      */
     Alien findByName(String name) throws ServiceException;
@@ -102,10 +102,10 @@ public interface AlienService {
     List<Alien> findAliensThatUserWatch(String userId, int page, int limit) throws ServiceException;
 
     /**
-     * Count of all serials by search form.
+     * Count of all aliens by search form.
      *
      * @param searchForm the search form
-     * @return number of all serials by search form
+     * @return number of all aliens by search form
      * @throws ServiceException if the method failed
      * @see SearchForm
      */
@@ -126,7 +126,7 @@ public interface AlienService {
      * @return number of aliens that is watch user
      * @throws ServiceException if the method failed
      */
-    int countAllSerialsThatUserWatch(String userId) throws ServiceException;
+    int countAllAliensThatUserWatch(String userId) throws ServiceException;
 
     /**
      * Check if the user has seen this alien
@@ -169,11 +169,11 @@ public interface AlienService {
      * Check if the user likes this alien.
      *
      * @param userId   the user id
-     * @param serialId the aliens id
+     * @param alienId the aliens id
      * @return true if user liked that alien and false otherwise.
      * @throws ServiceException if the method failed
      */
-    boolean userLikedThisAlien(String userId, String serialId) throws ServiceException;
+    boolean userLikedThisAlien(String userId, String alienId) throws ServiceException;
 
     /**
      * Add an alien to user liked.

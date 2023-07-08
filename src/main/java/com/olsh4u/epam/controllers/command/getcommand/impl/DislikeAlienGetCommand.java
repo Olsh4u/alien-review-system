@@ -7,6 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import com.olsh4u.epam.controllers.command.RoutingType;
+import com.olsh4u.epam.exception.ServiceException;
+import com.olsh4u.epam.service.factory.ServiceFactory;
+import com.olsh4u.epam.utils.RoutingUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,7 +48,11 @@ public class DislikeAlienGetCommand implements Command {
         int userId = (Integer) req.getSession().getAttribute(ATTRIBUTE_USER_ID);
 
         try {
-            ServiceFactory.getIn
+            ServiceFactory.getInstance().getAlienService().dislikeAlien(String.valueOf(userId), alienId);
+            return new CommandResponse(RoutingType.REDIRECT, ROUTING_SHOW_PAGE + "?id" + alienId, req, resp);
+        } catch (ServiceException e){
+            logger.error(e);
+            return RoutingUtils.routingErrorPage(req, resp, e.getCode());
         }
     }
 }

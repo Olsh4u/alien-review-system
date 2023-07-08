@@ -26,6 +26,49 @@ import java.util.List;
  * @see DaoException
  */
 public class AlienDaoImpl implements AlienDao {
+    private static final String SELECT_ALL_ALIENS_FIELD = "SELECT s.id, s.name, s.description, s.logo, s.full_size_logo," +
+            " s.first_appearance, s.likes_count, s.ability_id, s.planet_id FROM aliens s";
+    private static final String FIND_ALIEN_BY_NAME = SELECT_ALL_ALIENS_FIELD + " WHERE s.name = ?";
+
+    private static final String FIND_ALL_ALIENS = SELECT_ALL_ALIENS_FIELD;
+
+    private static final String FIND_ALIENS_PAGE_BY_PAGE = SELECT_ALL_ALIENS_FIELD + " LIMIT ? OFFSET ?";
+
+    private static final String FIND_MOST_LIKED_ALIENS = SELECT_ALL_ALIENS_FIELD + " ORDER BY s.likes_count DESC LIMIT ? OFFSET ?";
+
+    private static final String LATEST_ALIENS = SELECT_ALL_ALIENS_FIELD + " ORDER BY s.id DESC LIMIT ?";
+
+    private static final String COUNT_ALL_ALIENS = "SELECT COUNT(*) FROM aliens";
+
+    private static final String FIND_ALIEN_BY_SEARCH_FORM_2 = "SELECT DISTINCT s.id, s.* FROM aliens s LEFT JOIN aliens_sources sg ON s.id = sg.alien_id WHERE (name like ? or description like ?)";
+
+    private static final String COUNT_ALL_ALIENS_BY_SEARCH_FORM = "SELECT COUNT(DISTINCT s.id) FROM aliens s LEFT JOIN aliens_sources sg ON s.id = sg.alien_id WHERE (name like ? or description like ?)";
+
+    private static final String FIND_ALIEN_BY_ID = SELECT_ALL_ALIENS_FIELD + " WHERE s.id = ?";
+
+    private static final String DELETE_ALIEN_BY_ID = "DELETE FROM aliens WHERE id = ?";
+
+    private static final String CREATE_ALIEN = "INSERT INTO aliens VALUES (DEFAULT, ?, ?, ?, ?, ?, DEFAULT, ?, ?)";
+    private static final String ALIEN_SOURCES_VALUES = "INSERT INTO aliens_sources VALUES (?, ?)";
+    private static final String UPDATE_ALIEN = "UPDATE aliens SET name = ?, description = ?, logo = ?, full_logo = ?," +
+            " first_appearance = ?, ability_id = ?, planet_id = ? WHERE id = ?";
+    private static final String DELETE_ALIENS_SOURCES = "DELETE FROM aliens_sources WHERE alien_id = ?";
+    private static final String WATCH_ALIEN = "INSERT INTO viewed VALUES (?, ?)";
+
+    private static final String STOP_WATCH_ALIEN = "DELETE FROM viewed WHERE (user_id = ? and alien_id = ?)";
+
+    private static final String ALIEN_IS_WATCH_STATUS = SELECT_ALL_ALIENS_FIELD + " JOIN viewed v on s.id = v.alien_id WHERE v.user_id = ? and v.alien_id = ?";
+
+    private static final String FIND_ALIENS_THAT_I_WATCH = SELECT_ALL_ALIENS_FIELD + " JOIN viewed v on s.id = v.alien_id WHERE v.user_id = ? LIMIT ? OFFSET ?";
+
+    private static final String COUNT_ALL_ALIENS_THAT_I_WATCH = "SELECT COUNT(*) FROM viewed WHERE user_id = ?";
+    private static final String FIND_ALIENS_THAT_I_LIKED = SELECT_ALL_ALIENS_FIELD + " JOIN liked l on s.id = l.alien_id WHERE l.user_id = ? LIMIT ? OFFSET ?";
+    private static final String COUNT_ALL_ALIENS_THAT_I_LIKED = "SELECT COUNT(*) FROM liked WHERE user_id = ?";
+    private static final String LIKE_ALIEN = "UPDATE alien SET likes_count = likes_count + 1 WHERE id = ?";
+    private static final String ADD_IN_LIKED = "INSERT INTO liked VALUES (?, ?)";
+    private static final String DISLIKE_ALIEN = "UPDATE alien SET likes_count = likes_count - 1 WHERE id = ?";
+    private static final String REMOVE_IN_LIKED = "DELETE FROM liked WHERE (user_id = ? and alien_id = ?)";
+    private static final String ALIEN_IS_LIKED_STATUS = SELECT_ALL_ALIENS_FIELD + " JOIN liked l on s.id = l.alien_id WHERE l.user_id = ? and l.alien_id = ?";
 
     /**
      * An object that provides access to a data source.
@@ -68,11 +111,6 @@ public class AlienDaoImpl implements AlienDao {
         this.transaction = transaction;
     }
 
-    private static final String SELECT_ALL_ALIENS_FIELD = "SELECT s.id, s.name, s.description, s.logo, s.full_size_logo," +
-            " s.first_appearance, s.likes_count, s.ability_id, s.planet_id FROM aliens s";
-
-    private static final String FIND_ALIEN_BY_NAME = SELECT_ALL_ALIENS_FIELD + " WHERE s.name = ?";
-
     /**
      * Find alien by aline name.
      *
@@ -86,15 +124,11 @@ public class AlienDaoImpl implements AlienDao {
                 ResultSetHandlerFactory.getSingleResultSetHandler(ALIENS_RESULT_SET_HANDLER), name);
     }
 
-    private static final String FIND_ALL_ALIENS = SELECT_ALL_ALIENS_FIELD;
-
     @Override
     public List<Alien> findAll() throws DaoException {
         return JdbcUtil.select(transaction.getConnection(), FIND_ALL_ALIENS,
                 ResultSetHandlerFactory.getListResultSetHandler(ALIENS_RESULT_SET_HANDLER));
     }
-
-    private static final String FIND_ALIENS_PAGE_BY_PAGE = SELECT_ALL_ALIENS_FIELD + " LIMIT ? OFFSET ?";
 
     /**
      * Find aliens page by page.
@@ -111,8 +145,6 @@ public class AlienDaoImpl implements AlienDao {
                 ResultSetHandlerFactory.getListResultSetHandler(ALIENS_RESULT_SET_HANDLER), limit, offset);
     }
 
-    private static final String FIND_MOST_LIKED_ALIENS = SELECT_ALL_ALIENS_FIELD + " ORDER BY s.likes_count DESC LIMIT ? OFFSET ?";
-
     /**
      * Find most liked aliens.
      *
@@ -128,8 +160,6 @@ public class AlienDaoImpl implements AlienDao {
                 ResultSetHandlerFactory.getListResultSetHandler(ALIENS_RESULT_SET_HANDLER), limit, offset);
     }
 
-    private static final String LATEST_ALIENS = SELECT_ALL_ALIENS_FIELD + " ORDER BY s.id DESC LIMIT ?";
-
     /**
      * Latest alien.
      *
@@ -142,9 +172,6 @@ public class AlienDaoImpl implements AlienDao {
         return JdbcUtil.select(transaction.getConnection(), LATEST_ALIENS,
                 ResultSetHandlerFactory.getListResultSetHandler(ALIENS_RESULT_SET_HANDLER), limit);
     }
-
-
-    private static final String COUNT_ALL_ALIENS = "SELECT COUNT(*) FROM aliens";
 
     /**
      * Count all aliens.
@@ -179,8 +206,6 @@ public class AlienDaoImpl implements AlienDao {
                 ResultSetHandlerFactory.getListResultSetHandler(ALIENS_RESULT_SET_HANDLER), query.getParams().toArray());
     }
 
-    private static final String FIND_ALIEN_BY_SEARCH_FORM_2 = "SELECT DISTINCT s.id, s.* FROM aliens s LEFT JOIN aliens_sources sg ON s.id = sg.alien_id WHERE (name like ? or description like ?)";
-
     /**
      * Build SQL query based on searchForm.
      *
@@ -201,8 +226,6 @@ public class AlienDaoImpl implements AlienDao {
         return new SearchQuery(sql, param);
     }
 
-    private static final String COUNT_ALL_ALIENS_BY_SEARCH_FORM = "SELECT COUNT(DISTINCT s.id) FROM aliens s LEFT JOIN aliens_sources sg ON s.id = sg.alien_id WHERE (name like ? or description like ?)";
-
     /**
      * Count all alien by search form.
      *
@@ -217,8 +240,6 @@ public class AlienDaoImpl implements AlienDao {
                 ResultSetHandlerFactory.getCountResultSetHandler(), query.getParams().toArray());
     }
 
-    private static final String FIND_ALIEN_BY_ID = SELECT_ALL_ALIENS_FIELD + " WHERE s.id = ?";
-
     /**
      * Find alien by id.
      *
@@ -232,8 +253,6 @@ public class AlienDaoImpl implements AlienDao {
                 ResultSetHandlerFactory.getSingleResultSetHandler(ALIENS_RESULT_SET_HANDLER), id);
     }
 
-    private static final String DELETE_ALIEN_BY_ID = "DELETE FROM aliens WHERE id = ?";
-
     /**
      * Delete aliens by id.
      *
@@ -245,9 +264,6 @@ public class AlienDaoImpl implements AlienDao {
     public boolean delete(final String id) throws DaoException {
         return JdbcUtil.execute(transaction.getConnection(), DELETE_ALIEN_BY_ID, id);
     }
-
-    private static final String CREATE_ALIEN = "INSERT INTO aliens VALUES (DEFAULT, ?, ?, ?, ?, ?, DEFAULT, ?, ?)";
-    private static final String ALIEN_SOURCES_VALUES = "INSERT INTO aliens_sources VALUES (?, ?)";
 
     /**
      * Create alien. Else add sources value in table aliens_sources.
@@ -275,10 +291,6 @@ public class AlienDaoImpl implements AlienDao {
         return paramList;
     }
 
-    private static final String UPDATE_ALIEN = "UPDATE aliens SET name = ?, description = ?, logo = ?, full_logo = ?," +
-            " first_appearance = ?, ability_id = ?, planet_id = ? WHERE id = ?";
-    private static final String DELETE_ALIENS_SOURCES = "DELETE FROM aliens_sources WHERE alien_id = ?";
-
     /**
      * Update alien. Delete all value which correspond this alien in the table aliens_sources and add new value.
      *
@@ -296,8 +308,6 @@ public class AlienDaoImpl implements AlienDao {
                 entity.getFirstAppearance(), entity.getAbility().getId(), entity.getPlanet().getId(), entity.getId());
     }
 
-    private static final String WATCH_ALIEN = "INSERT INTO viewed VALUES (?, ?)";
-
     /**
      * To watch alien. Add user id and alien id in the table viewed.
      *
@@ -310,8 +320,6 @@ public class AlienDaoImpl implements AlienDao {
     public boolean toWatchAlien(final String userId, final String alienId) throws DaoException {
         return JdbcUtil.execute(transaction.getConnection(), WATCH_ALIEN, userId, alienId);
     }
-
-    private static final String STOP_WATCH_ALIEN = "DELETE FROM viewed WHERE (user_id = ? and alien_id = ?)";
 
     /**
      * Stop watch alien. Remove user id and alien id in the table viewed.
@@ -326,8 +334,6 @@ public class AlienDaoImpl implements AlienDao {
         return JdbcUtil.execute(transaction.getConnection(), STOP_WATCH_ALIEN, userId, alienId);
     }
 
-    private static final String ALIEN_IS_WATCH_STATUS = SELECT_ALL_ALIENS_FIELD + " JOIN viewed v on s.id = v.alien_id WHERE v.user_id = ? and v.alien_id = ?";
-
     /**
      * Check if the user is watching this alien.
      *
@@ -341,8 +347,6 @@ public class AlienDaoImpl implements AlienDao {
         return JdbcUtil.select(transaction.getConnection(), ALIEN_IS_WATCH_STATUS,
                 ResultSetHandlerFactory.getCountResultSetHandler(), userId, alienId) != 0;
     }
-
-    private static final String FIND_ALIENS_THAT_I_WATCH = SELECT_ALL_ALIENS_FIELD + " JOIN viewed v on s.id = v.alien_id WHERE v.user_id = ? LIMIT ? OFFSET ?";
 
     /**
      * Find all aliens that user watch.
@@ -360,8 +364,6 @@ public class AlienDaoImpl implements AlienDao {
                 ResultSetHandlerFactory.getListResultSetHandler(ALIENS_RESULT_SET_HANDLER), userId, limit, offset);
     }
 
-    private static final String COUNT_ALL_ALIENS_THAT_I_WATCH = "SELECT COUNT(*) FROM viewed WHERE user_id = ?";
-
     /**
      * Count all aliens that user watch.
      *
@@ -374,8 +376,6 @@ public class AlienDaoImpl implements AlienDao {
         return JdbcUtil.select(transaction.getConnection(), COUNT_ALL_ALIENS_THAT_I_WATCH,
                 ResultSetHandlerFactory.getCountResultSetHandler(), userId);
     }
-
-    private static final String FIND_ALIENS_THAT_I_LIKED = SELECT_ALL_ALIENS_FIELD + " JOIN liked l on s.id = l.alien_id WHERE l.user_id = ? LIMIT ? OFFSET ?";
 
     /**
      * Find aliens that user liked.
@@ -393,8 +393,6 @@ public class AlienDaoImpl implements AlienDao {
                 ResultSetHandlerFactory.getListResultSetHandler(ALIENS_RESULT_SET_HANDLER), userId, limit, offset);
     }
 
-    private static final String COUNT_ALL_ALIENS_THAT_I_LIKED = "SELECT COUNT(*) FROM liked WHERE user_id = ?";
-
     /**
      * Count all aliens that user liked.
      *
@@ -407,9 +405,6 @@ public class AlienDaoImpl implements AlienDao {
         return JdbcUtil.select(transaction.getConnection(), COUNT_ALL_ALIENS_THAT_I_LIKED,
                 ResultSetHandlerFactory.getCountResultSetHandler(), userId);
     }
-
-    private static final String LIKE_ALIEN = "UPDATE alien SET likes_count = likes_count + 1 WHERE id = ?";
-    private static final String ADD_IN_LIKED = "INSERT INTO liked VALUES (?, ?)";
 
     /**
      * Add an alien to user liked table. And increase value like in the table aliens.
@@ -425,9 +420,6 @@ public class AlienDaoImpl implements AlienDao {
                 JdbcUtil.execute(transaction.getConnection(), ADD_IN_LIKED, userId, alienId);
     }
 
-    private static final String DISLIKE_ALIEN = "UPDATE alien SET likes_count = likes_count - 1 WHERE id = ?";
-    private static final String REMOVE_IN_LIKED = "DELETE FROM liked WHERE (user_id = ? and alien_id = ?)";
-
     /**
      * Remove an alien to user liked. And reduce value like in the table alien.
      *
@@ -441,8 +433,6 @@ public class AlienDaoImpl implements AlienDao {
         return JdbcUtil.execute(transaction.getConnection(), DISLIKE_ALIEN, alienId) &&
                 JdbcUtil.execute(transaction.getConnection(), REMOVE_IN_LIKED, userId, alienId);
     }
-
-    private static final String ALIEN_IS_LIKED_STATUS = SELECT_ALL_ALIENS_FIELD + " JOIN liked l on s.id = l.alien_id WHERE l.user_id = ? and l.alien_id = ?";
 
     /**
      * Check whether the user likes this alien.

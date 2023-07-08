@@ -36,7 +36,7 @@ public interface PlanetDao extends AbstractDao<String, Planet> {
      * @return the list of planets
      * @throws DaoException if the method failed
      */
-    List<Planet> findPlanetPageByPage(int page, int limit) throws DaoException;
+    List<Planet> findPlanetsPageByPage(int page, int limit) throws DaoException;
 
     /**
      * Count of all planet.
