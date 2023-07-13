@@ -182,7 +182,7 @@ public interface AlienService {
      * @param alienId the alien id
      * @throws ServiceException if the method failed
      */
-    void likedAlien(String userId, String alienId) throws ServiceException;
+    void likeAlien(String userId, String alienId) throws ServiceException;
 
     /**
      * Remove an alien from user liked.

@@ -373,7 +373,7 @@ public class AlienServiceImpl implements AlienService {
      * @throws ServiceException if there is an error on the DAO layer or if the user is already liked this alien
      */
     @Override
-    public void likedAlien(final String userId, final String alienId) throws ServiceException {
+    public void likeAlien(final String userId, final String alienId) throws ServiceException {
         try (Transaction transaction = new Transaction()) {
             if (!DaoFactory.getInstance().getAlienDao(transaction).userLikedThisAlien(userId, alienId)) {
                 DaoFactory.getInstance().getAlienDao(transaction)
