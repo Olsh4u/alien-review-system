@@ -9,6 +9,7 @@ public class Constants {
     public static final String PARAMETER_COUNT_ALL_ABILITIES = "countAllAbilities";
     public static final String PARAMETER_ITEMS_ON_PAGE = "itemsOnPage";
     public static final String PARAMETER_SOURCES = "sources";
+    public static final String PARAMETER_SOURCE = "source";
     public static final String PARAMETER_COUNT_ALL_SOURCES = "countAllSources";
     public static final String PARAMETER_PLANET = "planet";
     public static final String PARAMETER_COUNT_ALL_PLANETS = "countAllPlanets";
@@ -17,10 +18,21 @@ public class Constants {
     public static final String PARAMETER_LANGUAGE = "language";
     public static final String PARAMETER_LAST_ALIENS = "last";
     public static final String PARAMETER_QUERY = "query";
+    public static final String PARAMETER_PASSWORD = "password";
+    public static final String PARAMETER_NEW_PASSWORD = "newPassword";
+    public static final String PARAMETER_COMMENT_ID = "commentId";
+    public static final String PARAMETER_COMMENT = "comment";
+    public static final String PARAMETER_ACCESS_RIGHTS = "accessRights";
+    public static final String PARAMETER_DESCRIPTION = "description";
+    public static final String PARAMETER_NAME = "name";
+    public static final String PARAMETER_FIRST_APPEARANCE = "first_appearance";
 
 
     public static final String ATTRIBUTE_STATUS_CODE = "statusCode";
+
     public static final String ATTRIBUTE_USER_ID = "userId";
+    public static final String ATTRIBUTE_ERROR = "error";
+    public static final String ATTRIBUTE_SERIAL_PUBLICATION_DATE_PROBLEM = "serialPublicationDateProblem";
     public static final String ATTRIBUTE_USER = "user";
     public static final String ATTRIBUTE_INVALID_PASSWORD = "invalidPassword";
     public static final String ATTRIBUTE_USER_AVATAR_PROBLEM = "userAvatarProblem";
@@ -47,7 +59,7 @@ public class Constants {
     public static final String ATTRIBUTE_LIKED_STATUS = "likedStatus";
 
 
-
+    public static final String ROUTING_USER_PAGE = "/final/admin/user.html";
     public static final String ROUTING_ERROR_JSP = "error.jsp";
     public static final String ROUTING_SHOW_PAGE = "/final/show.html";
     public static final String ROUTING_ADMIN_ABILITY_JSP = "/admin/ability.jsp";
@@ -65,6 +77,12 @@ public class Constants {
     public static final String ROUTING_SEARCH_JSP = "search.jsp";
     public static final String ROUTING_SHOW_JSP = "show.jsp";
     public static final String ROUTING_MY_ALIENS_JSP = "my-aliens.jsp";
+    public static final String ROUTING_PROFILE_PAGE = "/final/profile.html";
+    public static final String ROUTING_LOGIN_PAGE = "/final/login.html";
+    public static final String ROUTING_REGISTRATION_PAGE = "/final/registration.html";
+    public static final String ROUTING_ABILITY_PAGE = "/final/admin/country.html";
+    public static final String ROUTING_SOURCE_PAGE = "/final/admin/genre.html";
+    public static final String ROUTING_PLANET_PAGE = "/final/admin/studio.html";
 
 
     public static final String ERROR_LOGGER = "error";
@@ -81,6 +99,7 @@ public class Constants {
     public static final int MAX_SERIAL_DESCRIPTION_LENGTH = 1000;
     public static final int MAX_ALIEN_LOGO_LENGTH = 100;
     public static final int MAX_PLANET_TITLE_LENGTH = 32;
+    public static final int MAX_USER_AVATAR_SIZE = 1024 * 1024;
 
 
     public static final String HEADER_REFERER = "referer";
@@ -99,6 +118,11 @@ public class Constants {
 
 
     public static final int DEFAULT_PAGE_NUMBER = 1;
+    public static final String DEFAULT_AVATAR_NAME = "noAvatar.png";
+    public static final String DEFAULT_IMG_NAME = "noFoto.png";
+
+
+    public static final String ENCODING_UTF_8 = "UTF-8";
 
 
 }

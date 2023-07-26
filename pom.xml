@@ -15,6 +15,7 @@
         <jsp-api.version>2.3.3</jsp-api.version>
         <log4j-api.version>2.20.0</log4j-api.version>
         <postgresql.version>42.6.0</postgresql.version>
+        <apache.commons.version>1.4</apache.commons.version>
     </properties>
 
     <dependencies>
@@ -56,7 +57,11 @@
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
-
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${apache.commons.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>alien-review-system</finalName>
